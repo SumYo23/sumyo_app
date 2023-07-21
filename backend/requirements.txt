@@ -21,6 +21,7 @@ distlib==0.3.6
 Django==4.0.6
 django-allauth==0.51.0
 django-bootstrap4==22.1
+django-environ==0.10.0
 django-extensions==3.2.1
 django-werkzeug-debugger-runserver==0.3.1
 djangorestframework==3.13.1
@@ -30,6 +31,7 @@ exceptiongroup==1.0.0rc9
 executing==1.1.0
 filelock==3.8.0
 fonttools==4.41.0
+gunicorn==21.2.0
 h11==0.14.0
 idna==2.10
 ipykernel==6.16.0

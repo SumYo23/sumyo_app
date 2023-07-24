@@ -37,7 +37,6 @@ class Cook(models.Model):
     method = models.CharField(max_length=20, null=True)
     image_route = models.TextField(null=True)
     ingredient = models.TextField(null=True)
-    recipe = models.TextField(null=True)
     cook_ingredient = models.ManyToManyField("Ingredient")
     cook_recipe = models.ManyToManyField("Recipe")
 

@@ -5,7 +5,7 @@ from django.db import models
 
 class Like(models.Model):
     cook = models.ForeignKey("cook.Cook", on_delete=models.CASCADE)
-    user = models.ForeignKey("user.SumyoUser", on_delete=models.CASCADE)
+    user = models.ForeignKey("user.User", on_delete=models.CASCADE)
 
     objects = models.Manager()
 

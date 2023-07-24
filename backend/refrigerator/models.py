@@ -6,7 +6,7 @@ from django.db import models
 class Refrigerator(models.Model):
     count = models.IntegerField()
     add_date = models.DateField(auto_now_add=True)
-    user = models.ForeignKey("user.SumyoUser", on_delete=models.CASCADE)
+    user = models.ForeignKey("user.User", on_delete=models.CASCADE)
     ingredient = models.ForeignKey("cook.Ingredient", on_delete=models.CASCADE)
 
     objects = models.Manager()

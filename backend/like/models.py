@@ -4,13 +4,15 @@ from django.db import models
 # Create your models here.
 
 class Like(models.Model):
-    cook = models.ForeignKey("Cook", on_delete=models.CASCADE)
-    user = models.ForeignKey("User", on_delete=models.CASCADE)
+    cook = models.ForeignKey("cook.Cook", on_delete=models.CASCADE)
+    user = models.ForeignKey("user.User", on_delete=models.CASCADE)
+
+    objects = models.Manager()
 
     def __str__(self):
-        return self.user.user_number + " likes " + self.cook.name
+        return str(self.user) + " likes " + self.cook.name
 
     class Meta:
-        db_table = "sumyo_refrigerator"
-        verbose_name = "냉장고"
-        verbose_name_plural = "냉장고"
+        db_table = "sumyo_like"
+        verbose_name = "좋아요"
+        verbose_name_plural = "좋아요"

@@ -31,7 +31,8 @@ SECRET_KEY = env('SECRET_KEY')
 DEBUG = env('DEBUG')
 
 ALLOWED_HOSTS = [
-    env("ALLOWED_HOST")
+    env("ALLOWED_HOST_SERVER"),
+    env("ALLOWED_HOST_LOCAL")
 ]
 
 # Application definition
@@ -43,7 +44,11 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "cook"
+    "cook",
+    "like",
+    "refrigerator",
+    "user",
+    "backoffice"
 ]
 
 MIDDLEWARE = [
@@ -61,7 +66,7 @@ ROOT_URLCONF = "backend.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [os.path.join(BASE_DIR, 'templates')],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [

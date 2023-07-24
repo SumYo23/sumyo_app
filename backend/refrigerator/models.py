@@ -1,17 +1,18 @@
 from django.db import models
 
 # Create your models here.
-from backend.user.models import User
 
 
 class Refrigerator(models.Model):
     count = models.IntegerField()
     add_date = models.DateField(auto_now_add=True)
-    user = models.ForeignKey("User", on_delete=models.CASCADE)
-    ingredient = models.ForeignKey("Ingredient", on_delete=models.CASCADE)
+    user = models.ForeignKey("user.User", on_delete=models.CASCADE)
+    ingredient = models.ForeignKey("cook.Ingredient", on_delete=models.CASCADE)
+
+    objects = models.Manager()
 
     def __str__(self):
-        return self.user.user_number + " => " + self.ingredient.name + " : " + self.count + "개"
+        return str(self.user) + " => " + self.ingredient.name + " : " + str(self.count) + "개"
 
     class Meta:
         db_table = "sumyo_refrigerator"

@@ -5,6 +5,8 @@ from django.db import models
 class Ingredient(models.Model):
     name = models.CharField(max_length=256)
 
+    objects = models.Manager()
+
     def __str__(self):
         return self.name
 
@@ -17,7 +19,9 @@ class Ingredient(models.Model):
 class Recipe(models.Model):
     number = models.IntegerField()
     detail = models.TextField()
-    image_route = models.CharField(max_length=256)
+    image_route = models.TextField()
+
+    objects = models.Manager()
 
     def __str__(self):
         return str(self.number) + ") " + str(self.detail)
@@ -30,12 +34,14 @@ class Recipe(models.Model):
 
 class Cook(models.Model):
     name = models.TextField()
-    method = models.CharField(max_length=20)
-    time = models.CharField(max_length=20)
-    ingredient = models.TextField()
-    recipe = models.TextField()
+    method = models.CharField(max_length=20, null=True)
+    image_route = models.TextField(null=True)
+    ingredient = models.TextField(null=True)
+    recipe = models.TextField(null=True)
     cook_ingredient = models.ManyToManyField("Ingredient")
     cook_recipe = models.ManyToManyField("Recipe")
+
+    objects = models.Manager()
 
     def __str__(self):
         return self.name

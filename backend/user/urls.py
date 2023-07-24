@@ -3,8 +3,7 @@ from django.urls import path
 from user import api
 
 urlpatterns = [
-    path('register/', api.RegisterView.as_view(), name="RegisterView"),
-    path('login/', api.LoginView.as_view(), name="LoginView"),
+    path('get_token/', api.GetToken.as_view(), name="GetToken"),
+    path('delete_token/', api.DeleteToken.as_view(), name="DeleteToken"),
     path('view/', api.UserView.as_view(), name="UserView"),
-
 ]

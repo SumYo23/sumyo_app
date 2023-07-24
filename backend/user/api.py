@@ -4,32 +4,17 @@ from rest_framework.response import Response
 from rest_framework.exceptions import AuthenticationFailed
 from .models import User
 # install PyJWT
-import jwt, datetime
+import jwt
+import datetime
 
 # 회원가입
 from .serializers import UserSerializer
 
 
-class RegisterView(APIView):
+class GetToken(APIView):
     def post(self, request):
-        serializer = UserSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-        return Response(serializer.data)
+        user = User.objects.get_or_create(user_number=request['user_number'])
 
-
-class LoginView(APIView):
-    def post(self, request):
-        user_number = request.data['user_number']
-
-        user = User.objects.get(user_number=user_number)
-        serialize_user = UserSerializer(user)
-        json_user = JSONRenderer().render(serialize_user.data)
-
-        if user is None:
-            raise AuthenticationFailed('User does not found!')
-
-        ## JWT 구현 부분
         payload = {
             'user_number': user.user_number,
             'exp': datetime.datetime.now() + datetime.timedelta(minutes=60),
@@ -44,6 +29,16 @@ class LoginView(APIView):
             'jwt': token
         }
 
+        return response
+
+
+class DeleteToken(APIView):
+    def post(self):
+        response = Response()
+        response.delete_cookie('jwt')
+        response.data = {
+            "message": 'success'
+        }
         return response
 
 
@@ -65,13 +60,3 @@ class UserView(APIView):
 
         return Response(serializer.data)
 
-
-class LogoutView(APIView):
-    def post(self, req):
-        res = Response()
-        res.delete_cookie('jwt')
-        res.data = {
-            "message": 'success'
-        }
-
-        return res

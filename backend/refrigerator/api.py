@@ -21,6 +21,9 @@ class IngredientList(APIView):
     def post(self, request):
         ingredient = request.data["ingredient"]
         quantity = request.data["quantity"]
+        print(request.META)
+        #print(request.META["HTTP_CONTENT-LENGTH"])
+        print(request.META["HTTP_HOST"])
         user, _ = User.objects.get_or_create(user_number=request.META["HTTP_AUTHORIZATION"])
         ingredient, _ = Ingredient.objects.get_or_create(name=ingredient)
         refrigerator = Refrigerator.objects.create(ingredient=ingredient, quantity=quantity, user=user)
@@ -37,3 +40,4 @@ class IngredientList(APIView):
 
         response.status = status.HTTP_200_OK
         return response
+

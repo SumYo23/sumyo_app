@@ -47,7 +47,6 @@ INSTALLED_APPS = [
 
     # 설치한 라이브러리
     'rest_framework',
-    "rest_framework.authtoken",
 
     # 생성한 앱
     "cook",
@@ -57,8 +56,6 @@ INSTALLED_APPS = [
     "backoffice",
 ]
 
-# JWT 인증을 위한 설정
-AUTH_USER_MODEL = 'user.User'
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
@@ -98,13 +95,6 @@ TEMPLATES = [
 WSGI_APPLICATION = "backend.wsgi.application"
 
 # Database
-# https://docs.djangoproject.com/en/4.2/ref/settings/#databases
-# DATABASES = {
-#     "default": {
-#         "ENGINE": "django.db.backends.sqlite3",
-#         "NAME": "mydatabase",
-#     }
-# }
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',

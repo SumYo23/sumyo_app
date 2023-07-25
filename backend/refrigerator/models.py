@@ -4,7 +4,7 @@ from django.db import models
 
 
 class Refrigerator(models.Model):
-    quantity = models.IntegerField()
+    quantity = models.IntegerField(default=0)
     add_date = models.DateField(auto_now_add=True)
     user = models.ForeignKey("user.User", on_delete=models.CASCADE)
     ingredient = models.ForeignKey("cook.Ingredient", on_delete=models.CASCADE)

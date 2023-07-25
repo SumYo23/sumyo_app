@@ -3,6 +3,7 @@ from django.urls import path
 from refrigerator import api
 
 urlpatterns = [
-    path('ingredient_list/', api.IngredientList.as_view(), name="IngredientList"),
-    path('ingredient_list/<int:name>', api.IngredientList.as_view(), name="IngredientList"),
+    path('list/', api.RefrigeratorList.as_view(), name="refrigerator_list"),
+    path('list/<str:ingredient>/<int:quantity>/', api.RefrigeratorPut.as_view(), name="refrigerator_put"),
+    path('list/<str:ingredient>/', api.RefrigeratorDelete.as_view(), name="refrigerator_delete"),
 ]

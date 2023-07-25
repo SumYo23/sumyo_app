@@ -4,7 +4,7 @@ from django.db import models
 
 
 class Refrigerator(models.Model):
-    count = models.IntegerField()
+    quantity = models.IntegerField()
     add_date = models.DateField(auto_now_add=True)
     user = models.ForeignKey("user.User", on_delete=models.CASCADE)
     ingredient = models.ForeignKey("cook.Ingredient", on_delete=models.CASCADE)
@@ -12,7 +12,7 @@ class Refrigerator(models.Model):
     objects = models.Manager()
 
     def __str__(self):
-        return self.ingredient.name + " : " + str(self.count) + "개"
+        return self.ingredient.name + " : " + str(self.quantity) + "개"
 
     class Meta:
         db_table = "sumyo_refrigerator"

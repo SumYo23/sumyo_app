@@ -25,6 +25,7 @@ django-environ==0.10.0
 django-extensions==3.2.1
 django-werkzeug-debugger-runserver==0.3.1
 djangorestframework==3.13.1
+djangorestframework-jwt==1.11.0
 entrypoints==0.4
 et-xmlfile==1.1.0
 exceptiongroup==1.0.0rc9
@@ -63,7 +64,7 @@ psycopg2==2.9.3
 pure-eval==0.2.2
 pycparser==2.21
 Pygments==2.13.0
-PyJWT==2.4.0
+PyJWT==1.7.1
 pyOpenSSL==22.1.0
 pyparsing==2.4.7
 PySocks==1.7.1

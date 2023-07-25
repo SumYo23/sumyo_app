@@ -1,3 +1,4 @@
+from rest_framework import status
 from rest_framework.decorators import APIView
 from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
@@ -11,52 +12,34 @@ import datetime
 from .serializers import UserSerializer
 
 
+# 쿠키로 관리하려면?
+# token = request.COOKIES.get('jwt')
+# response.delete_cookie('jwt')
+
 class GetToken(APIView):
     def post(self, request):
-        user = User.objects.get_or_create(user_number=request['user_number'])
-
-        payload = {
-            'user_number': user.user_number,
-            'exp': datetime.datetime.now() + datetime.timedelta(minutes=60),
-            'iat': datetime.datetime.now()
-        }
-
-        token = jwt.encode(payload, "secretJWTkey", algorithm="HS256").decode('utf-8')
-
-        response = Response()
-        response.set_cookie(key='jwt', value=token, httponly=True)
-        response.data = {
-            'jwt': token
-        }
-
-        return response
-
-
-class DeleteToken(APIView):
-    def post(self):
-        response = Response()
-        response.delete_cookie('jwt')
-        response.data = {
-            "message": 'success'
-        }
-        return response
-
-
-class UserView(APIView):
-    def get(self, request):
-        token = request.COOKIES.get('jwt')
-
-        if not token:
-            raise AuthenticationFailed('UnAuthenticated!')
-
         try:
-            payload = jwt.decode(token, 'secretJWTkey', algorithms=['HS256'])
+            user, _ = User.objects.get_or_create(user_number=request.data.get("user_number", ""))
 
-        except jwt.ExpiredSignatureError:
-            raise AuthenticationFailed('UnAuthenticated!')
+            payload = {
+                'user_number': user.user_number,
+                'exp': datetime.datetime.now() + datetime.timedelta(minutes=60),
+                'iat': datetime.datetime.now()
+            }
 
-        user = User.objects.get(user_number=payload['user_number'])
-        serializer = UserSerializer(user)
+            token = jwt.encode(payload, "secretJWTkey", algorithm="HS256").decode('utf-8')
 
-        return Response(serializer.data)
-
+            response = Response()
+            response.set_cookie(key='jwt', value=token, httponly=True)
+            response.data = {
+                'token': token
+            }
+            response.status = status.HTTP_201_CREATED
+            return response
+        except Exception:
+            response = Response()
+            response.data = {
+                "message": "error occured"
+            }
+            response.status = status.HTTP_400_BAD_REQUEST
+            return response

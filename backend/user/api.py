@@ -18,28 +18,20 @@ from .serializers import UserSerializer
 
 class GetToken(APIView):
     def post(self, request):
-        try:
-            user, _ = User.objects.get_or_create(user_number=request.data.get("user_number", ""))
+        user, _ = User.objects.get_or_create(user_number=request.data.get("user_number"), user_number_repeat=request.data.get("user_number", ""))
 
-            payload = {
-                'user_number': user.user_number,
-                'exp': datetime.datetime.now() + datetime.timedelta(minutes=60),
-                'iat': datetime.datetime.now()
-            }
+        payload = {
+            'user_number': user.user_number,
+            'exp': datetime.datetime.now() + datetime.timedelta(minutes=60),
+            'iat': datetime.datetime.now()
+        }
 
-            token = jwt.encode(payload, "secretJWTkey", algorithm="HS256").decode('utf-8')
+        token = jwt.encode(payload, "secretJWTkey", algorithm="HS256").decode('utf-8')
 
-            response = Response()
-            response.set_cookie(key='jwt', value=token, httponly=True)
-            response.data = {
-                'token': token
-            }
-            response.status = status.HTTP_201_CREATED
-            return response
-        except Exception:
-            response = Response()
-            response.data = {
-                "message": "error occured"
-            }
-            response.status = status.HTTP_400_BAD_REQUEST
-            return response
+        response = Response()
+        response.set_cookie(key='jwt', value=token, httponly=True)
+        response.data = {
+            'token': token
+        }
+        response.status = status.HTTP_201_CREATED
+        return response

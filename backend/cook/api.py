@@ -1,15 +1,16 @@
 '''builtin'''
 from collections import Counter
+import random
 
 '''Third-Party'''
-from rest_framework import status
 from rest_framework.response import Response
+from rest_framework import status
 from rest_framework.views import APIView
 
 '''Django'''
 from user.models import User
 from refrigerator.models import Refrigerator
-from cook.models import Cook, CookIngredient
+from cook.models import Cook, CookIngredient, CookRecipe
 
 
 # 사용자별 음식 추천 목록 보여주기
@@ -24,26 +25,57 @@ class CookList(APIView):
         ## 냉장고 재고와 겹치는 요리들 일치율 순서로 정렬 ##
         user_cook = CookIngredient.objects.filter(ingredient__in=user_ingredient).values_list("cook", flat=True)
         user_cook_cnt = Counter(list(user_cook))
+        print(user_cook_cnt)
+        for k, v in user_cook_cnt.items():
+            user_cook_cnt[k] = int(v / CookIngredient.objects.filter(cook__pk=int(k)).count() * 100)
+        user_cook_cnt = user_cook_cnt
         user_cook_cnt = sorted(user_cook_cnt.items(), key=lambda x: x[1], reverse=True)  # 겹치는 개수 순서로 정렬
-        user_cook_list = [u[0] for u in user_cook_cnt]
 
+        ## 사용자와 안겹치는 요리 목록 ##
+        cook_list = list(set(Cook.objects.all().values_list("pk", flat=True)) - set(user_cook))
+
+        ## 요청받은 수만큼 보여줌
         result = list()
-        ## 요청받은 수만큼 정렬
-        if len(user_cook_list) > num:
-            for i in range(num):
-                cook = Cook.objects.get(pk=user_cook_list[i])
-                result.append(
+        for i in range(num):
+            if len(user_cook_cnt) >= i + 1:
+                pk = user_cook_cnt[i][0]
+                cook = Cook.objects.get(pk=pk)
+                percent = user_cook_cnt[i][1]
+                status = "추천"
+            else:
+                pk = cook_list.pop(random.randrange(len(cook_list)))
+                cook = Cook.objects.get(pk=pk)
+                percent = 0
+                status = "랜덤"
+
+            recipes = list()
+            for recipe in CookRecipe.objects.filter(cook__pk=pk):
+                recipes.append(
                     {
-                        "id": cook.pk,
-                        "image_route": cook.image_route,
-                        "name": cook.name,
-                        "percent": 100
+                        "number": recipe.recipe.number,
+                        "detail": recipe.recipe.detail,
+                        "image_route": recipe.recipe.image_route
                     }
                 )
-        else:
-            pass
+
+            ingredients = list()
+            for ingredient in CookIngredient.objects.filter(cook__pk=pk):
+                ingredients.append(ingredient.ingredient.name)
+
+            result.append(
+                {
+                    "id": cook.pk,
+                    "image_route": cook.image_route,
+                    "name": cook.name,
+                    "percent": percent,
+                    "status": status,
+                    "ingredient": cook.ingredient,
+                    "recipes": recipes,
+                    "ingredients": ingredients
+
+                }
+            )
 
         response = Response()
         response.data = result
-        response.status = status.HTTP_200_OK
         return response

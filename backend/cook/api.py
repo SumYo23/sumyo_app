@@ -63,7 +63,9 @@ class CookList(APIView):
             # 요리 재료 ingredients 변수에 저장
             ingredients = list()
             for ingredient in CookIngredient.objects.filter(cook__pk=pk):
-                ingredients.append(ingredient.ingredient.name)
+                ingredients.append(
+                    {"name": ingredient.ingredient.name}
+                )
 
             # 결과
             result.append(

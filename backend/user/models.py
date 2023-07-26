@@ -1,6 +1,7 @@
 from django.db import models
 
 
+# 사용자
 class User(models.Model):
     user_number = models.TextField()
     registered_date = models.DateField(auto_now_add=True)

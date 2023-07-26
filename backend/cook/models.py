@@ -1,7 +1,7 @@
 from django.db import models
 
 
-# Create your models here.
+# 재료
 class Ingredient(models.Model):
     name = models.CharField(max_length=256, unique=True)
 
@@ -16,6 +16,7 @@ class Ingredient(models.Model):
         verbose_name_plural = "재료"
 
 
+# 요리 레시피
 class Recipe(models.Model):
     number = models.IntegerField()
     detail = models.TextField()
@@ -32,6 +33,7 @@ class Recipe(models.Model):
         verbose_name_plural = "레시피"
 
 
+# 요리
 class Cook(models.Model):
     name = models.TextField()
     method = models.CharField(max_length=20, null=True)
@@ -51,6 +53,7 @@ class Cook(models.Model):
         verbose_name_plural = "요리"
 
 
+# 요리 재료(ManyToMany 연결 테이블)
 class CookIngredient(models.Model):
     cook = models.ForeignKey('Cook', on_delete=models.CASCADE)
     ingredient = models.ForeignKey('Ingredient', on_delete=models.CASCADE)
@@ -59,6 +62,7 @@ class CookIngredient(models.Model):
         db_table = "sumyo_cook_ingredient"
 
 
+# 요리 레시피(ManyToMany 연결 테이블)
 class CookRecipe(models.Model):
     cook = models.ForeignKey('Cook', on_delete=models.CASCADE)
     recipe = models.ForeignKey('Recipe', on_delete=models.CASCADE)

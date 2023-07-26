@@ -1,7 +1,8 @@
 from django.urls import path
 
 from cook import api
+from .views import RecipeListAPIView
 
 urlpatterns = [
-    path('recipe_list/', api.RecipeList.as_view(), name="RecipeList"),
+    path('recipes/', RecipeListAPIView.as_view(), name="recipe-list"),
 ]

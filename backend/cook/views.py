@@ -1,6 +1,17 @@
-import csv
+import csv  # builtin
 
-from django.core.files.storage import FileSystemStorage
+from rest_framework.response import Response  # third-party
+from rest_framework import status
+from rest_framework import permissions
+from rest_framework import generics
+from rest_framework.generics import get_object_or_404
+from rest_framework.exceptions import ValidationError
+from django_filters import rest_framework as filters
+
+from django.core.files.storage import FileSystemStorage  # django
+
+from .models import Recipe  # local
+from .serializers import RecipeListSerializer
 
 data = None
 file_dir = "my_csv_file_directory"
@@ -31,3 +42,10 @@ def Import_csv(request):
 
     return render(request, 'unit1/upload.html', {})
 
+
+class RecipeListAPIView(generics.ListAPIView):
+    """레시피 목록"""
+    serializer_class = RecipeListSerializer
+    filter_backends = (filters.DjangoFilterBackend,)
+    queryset = Recipe.objects.all()
+    filterset_fields = ('number',)

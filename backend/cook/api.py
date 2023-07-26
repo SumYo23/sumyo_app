@@ -13,6 +13,7 @@ from refrigerator.models import Refrigerator
 from cook.models import Cook, CookIngredient, CookRecipe
 
 
+# [GET] 0.0.0.0/api/cook/list/
 class CookList(APIView):
     """사용자별 음식 추천 목록 보여주기"""
 

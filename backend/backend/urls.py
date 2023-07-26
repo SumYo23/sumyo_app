@@ -22,4 +22,5 @@ urlpatterns = [
     path("backoffice/", include("backoffice.urls")),
     path("api/refrigerator/", include("refrigerator.urls")),
     path("api/cook/", include("cook.urls")),
+    path("api/like/", include("like.urls")),
 ]

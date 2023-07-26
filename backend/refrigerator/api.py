@@ -1,9 +1,8 @@
+"""Third-party"""
 from rest_framework import status
 from rest_framework.response import Response
-
-# Create your views here.
 from rest_framework.views import APIView
-
+"""django"""
 from cook.models import Ingredient
 from refrigerator.models import Refrigerator
 from refrigerator.serializers import RefrigeratorSerializer
@@ -19,7 +18,7 @@ class RefrigeratorList(APIView):
         response.data = list()
         for refr in refrigerator:
             response.data.append(
-                {"ingredient": refr.ingredient.name, "quantity": str(refr.quantity), "date": refr.add_date})
+                {"ingredient": refr.ingredient.name, "quantity": refr.quantity, "date": refr.add_date})
         response.status = status.HTTP_200_OK
         return response
 
@@ -36,7 +35,7 @@ class RefrigeratorList(APIView):
         response = Response()
         response.data = {
             "ingredient": refrigerator_instance.ingredient.name,
-            "quantity": refrigerator_instance.quantity,
+            "quantity": int(refrigerator_instance.quantity),
             "date": refrigerator_instance.add_date
         }
         ingredient_instance.save()
@@ -53,7 +52,7 @@ class RefrigeratorPut(APIView):
         refrigerator_instance = Refrigerator.objects.get(ingredient=ingredient_instance, user=user)
         refrigerator_instance.quantity = quantity
         refrigerator_instance.save()
-        return Response({"ingredient": refrigerator_instance.ingredient.name, "quantity": quantity,
+        return Response({"ingredient": refrigerator_instance.ingredient.name, "quantity": int(quantity),
                          "date": refrigerator_instance.add_date}, status=status.HTTP_201_CREATED)
 
 

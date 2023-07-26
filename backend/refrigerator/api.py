@@ -2,6 +2,7 @@
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
+
 """django"""
 from cook.models import Ingredient
 from refrigerator.models import Refrigerator
@@ -45,9 +46,11 @@ class RefrigeratorList(APIView):
         return response
 
 
-class RefrigeratorPut(APIView):
-    def put(self, request, ingredient, quantity):
+class RefrigeratorDetail(APIView):
+    def put(self, request, ingredient):
         user, _ = User.objects.get_or_create(user_number=request.META["HTTP_AUTHORIZATION"])
+
+        quantity = request.data["quantity"]
         ingredient_instance = Ingredient.objects.get(name=ingredient)
         refrigerator_instance = Refrigerator.objects.get(ingredient=ingredient_instance, user=user)
         refrigerator_instance.quantity = quantity
@@ -55,10 +58,10 @@ class RefrigeratorPut(APIView):
         return Response({"ingredient": refrigerator_instance.ingredient.name, "quantity": int(quantity),
                          "date": refrigerator_instance.add_date}, status=status.HTTP_201_CREATED)
 
-
-class RefrigeratorDelete(APIView):
     def delete(self, request, ingredient):
         user, _ = User.objects.get_or_create(user_number=request.META["HTTP_AUTHORIZATION"])
+
         ingredient_instance = Ingredient.objects.get(name=ingredient)
-        Refrigerator.objects.get(ingredient=ingredient_instance, user=user).delete()
-        return Response(status=status.HTTP_200_OK)
+        refrigerator_instance = Refrigerator.objects.get(ingredient=ingredient_instance, user=user)
+        refrigerator_instance.delete()
+        return Response({"message": "delete_complete"}, status=status.HTTP_200_OK)

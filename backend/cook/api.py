@@ -7,7 +7,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.views import APIView
 
-'''Django'''
+'''local'''
 from user.models import User
 from refrigerator.models import Refrigerator
 from cook.models import Cook, CookIngredient, CookRecipe
@@ -18,13 +18,13 @@ class CookList(APIView):
 
     def get(self, request, num):
 
-        """사용자 정보"""
+        # 사용자 정보
         user, _ = User.objects.get_or_create(user_number=request.META["HTTP_AUTHORIZATION"])
 
-        """냉장고 재고"""
+        # 냉장고 재고
         user_ingredient = Refrigerator.objects.filter(user=user).values_list("ingredient", flat=True)
 
-        """냉장고 재고와 겹치는 요리들 일치율 순서로 정렬"""
+        # 냉장고 재고와 겹치는 요리들 일치율 순서로 정렬
         user_cook = CookIngredient.objects.filter(ingredient__in=user_ingredient).values_list("cook", flat=True)
         user_cook_cnt = Counter(list(user_cook))
         for k, v in user_cook_cnt.items():
@@ -32,10 +32,10 @@ class CookList(APIView):
         user_cook_cnt = user_cook_cnt
         user_cook_cnt = sorted(user_cook_cnt.items(), key=lambda x: x[1], reverse=True)  # 겹치는 개수 순서로 정렬
 
-        """사용자와 안겹치는 요리 목록"""
+        # 사용자와 안겹치는 요리 목록
         cook_list = list(set(Cook.objects.all().values_list("pk", flat=True)) - set(user_cook))
 
-        """요청받은 요리 수만큼 보여줌"""
+        # 요청받은 요리 수만큼 보여줌
         result = list()
         for i in range(num):
             if len(user_cook_cnt) >= i + 1:
@@ -49,7 +49,7 @@ class CookList(APIView):
                 percent = 0
                 status = "랜덤"
 
-            """요리 순서별로 recipes 변수에 저장"""
+            # 요리 순서별로 recipes 변수에 저장
             recipes = list()
             for recipe in CookRecipe.objects.filter(cook__pk=pk):
                 recipes.append(
@@ -59,12 +59,12 @@ class CookList(APIView):
                         "image_route": recipe.recipe.image_route
                     }
                 )
-            """요리 재료 ingredients 변수에 저장"""
+            # 요리 재료 ingredients 변수에 저장
             ingredients = list()
             for ingredient in CookIngredient.objects.filter(cook__pk=pk):
                 ingredients.append(ingredient.ingredient.name)
 
-            """결과"""
+            # 결과
             result.append(
                 {
                     "id": cook.pk,

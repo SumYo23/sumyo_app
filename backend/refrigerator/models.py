@@ -1,8 +1,8 @@
+"""django"""
 from django.db import models
 
-# Create your models here.
 
-
+# 냉장고
 class Refrigerator(models.Model):
     quantity = models.IntegerField(default=0)
     add_date = models.DateField(auto_now_add=True)

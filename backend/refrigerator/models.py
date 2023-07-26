@@ -12,7 +12,7 @@ class Refrigerator(models.Model):
     objects = models.Manager()
 
     def __str__(self):
-        return self.ingredient.name + " : " + str(self.quantity) + "개"
+        return f'{self.ingredient.name}: {self.quantity} 개'
 
     class Meta:
         db_table = "sumyo_refrigerator"

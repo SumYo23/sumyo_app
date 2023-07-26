@@ -1,9 +1,13 @@
 from rest_framework import serializers
 
-from refrigerator.models import Refrigerator
+from .models import Refrigerator
 
 
-class RefrigeratorSerializer(serializers.ModelSerializer):
+class RefrigeratorCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Refrigerator
-        fields = ('quantity', "user", "ingredient")
+        fields = (
+            'quantity',
+            'user',
+            'ingredient',
+        )

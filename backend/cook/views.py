@@ -6,6 +6,7 @@ from rest_framework import permissions
 from rest_framework import generics
 from rest_framework.generics import get_object_or_404
 from rest_framework.exceptions import ValidationError
+from django_filters import rest_framework as filters
 
 from django.core.files.storage import FileSystemStorage  # django
 
@@ -45,4 +46,6 @@ def Import_csv(request):
 class RecipeListAPIView(generics.ListAPIView):
     """레시피 목록"""
     serializer_class = RecipeListSerializer
+    filter_backends = (filters.DjangoFilterBackend,)
     queryset = Recipe.objects.all()
+    filterset_fields = ('number',)

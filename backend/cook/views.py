@@ -11,7 +11,9 @@ from django_filters import rest_framework as filters
 from django.core.files.storage import FileSystemStorage  # django
 
 from .models import Recipe  # local
-from .serializers import RecipeListSerializer
+from .models import Cook  # local
+from .serializers import CookListSerializer
+from .filters import CookFilter
 
 data = None
 file_dir = "my_csv_file_directory"
@@ -45,7 +47,8 @@ def Import_csv(request):
 
 class RecipeListAPIView(generics.ListAPIView):
     """레시피 목록"""
-    serializer_class = RecipeListSerializer
+    serializer_class = CookListSerializer
     filter_backends = (filters.DjangoFilterBackend,)
-    queryset = Recipe.objects.all()
-    filterset_fields = ('number',)
+    queryset = Cook.objects.all()
+    filterset_class = CookFilter
+

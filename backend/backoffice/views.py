@@ -43,7 +43,6 @@ def import_csv(request):
                     recipe.save()
             obj.save()
 
-
     else:
         return render(request, "import_csv.html")
     return HttpResponse("성공")

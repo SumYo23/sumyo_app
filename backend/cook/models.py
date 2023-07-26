@@ -37,8 +37,8 @@ class Cook(models.Model):
     method = models.CharField(max_length=20, null=True)
     image_route = models.TextField(null=True)
     ingredient = models.TextField(null=True)
-    cook_ingredient = models.ManyToManyField("Ingredient")
-    cook_recipe = models.ManyToManyField("Recipe")
+    cook_ingredient = models.ManyToManyField(Ingredient, related_name="cooks", through="CookIngredient")
+    cook_recipe = models.ManyToManyField("Recipe", related_name="cooks", through="CookRecipe")
 
     objects = models.Manager()
 
@@ -49,3 +49,19 @@ class Cook(models.Model):
         db_table = "sumyo_cook"
         verbose_name = "요리"
         verbose_name_plural = "요리"
+
+
+class CookIngredient(models.Model):
+    cook = models.ForeignKey('Cook', on_delete=models.CASCADE)
+    ingredient = models.ForeignKey('Ingredient', on_delete=models.CASCADE)
+
+    class Meta:
+        db_table = "sumyo_cook_ingredient"
+
+
+class CookRecipe(models.Model):
+    cook = models.ForeignKey('Cook', on_delete=models.CASCADE)
+    recipe = models.ForeignKey('Recipe', on_delete=models.CASCADE)
+
+    class Meta:
+        db_table = "sumyo_cook_recipe"

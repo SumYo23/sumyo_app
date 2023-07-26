@@ -2,6 +2,7 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+
 # from cook.serializers import RecipeSerializer
 
 
@@ -19,3 +20,8 @@ class RecipeList2(APIView):
         number = request.data["number"]
         detail = request.data["detail"]
         image_route = request.data["image_route"]
+
+
+class CookList(APIView):
+    def get(self, request):
+        return Response({"message": "success"})

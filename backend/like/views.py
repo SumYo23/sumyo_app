@@ -2,6 +2,8 @@
 from collections import Counter
 import random
 
+from cook.models import Cook
+
 '''Third-party'''
 from rest_framework.response import Response
 from rest_framework import status
@@ -107,3 +109,17 @@ class LikeList(APIView):
             response.data = result
             return response
         return Response('찜목록이 없습니다.')
+
+
+class LikeDetail(APIView):
+    def post(self, request):
+        user, _ = User.objects.get_or_create(user_number=request.META["HTTP_AUTHORIZATION"])
+        cook = Cook.objects.get(pk=request.data["cook_id"])
+        Like.objects.get_or_create(cook=cook, user=user)
+        return Response({"message": "success"})
+
+    def delete(self, request):
+        user, _ = User.objects.get_or_create(user_number=request.META["HTTP_AUTHORIZATION"])
+        cook = Cook.objects.get(pk=request.data["cook_id"])
+        Like.objects.filter(cook=cook, user=user).delete()
+        return Response({"message": "success"})

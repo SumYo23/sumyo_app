@@ -61,7 +61,6 @@ class CookList(APIView):
                     }
                 )
 
-            print(cook.ingredient.split(','), 'cook')
 
             # 요리 재료 ingredients 변수에 저장
             ingredients = list()

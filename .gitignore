@@ -3,3 +3,14 @@ backend/.env
 /venv
 backend/.idea
 .idea
+*pyc
+.idea/
+
+backend/backend/__pycache__/
+backend/backoffice/__pycache__/
+backend/cook/__pycache__/
+backend/like/__pycache__/
+backend/refrigerator/__pycache__/
+backend/user/__pycache__/
+backend/**/__pycache__/
+backend/*/__pycache__/

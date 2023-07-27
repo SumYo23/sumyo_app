@@ -125,3 +125,4 @@ class LikeDetail(APIView):
         cook = Cook.objects.get(pk=request.data["cook_id"])
         Like.objects.filter(cook=cook, user=user).delete()
         return Response({"message": "success"})
+

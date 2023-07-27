@@ -1,7 +1,7 @@
 from django.urls import path
 
-from cook import api
+from cook import views
 
 urlpatterns = [
-    path("list/<int:num>/", api.CookList.as_view(), name="cook_list")
+    path("list/<int:num>/", views.CookList.as_view(), name="cook_list")
 ]

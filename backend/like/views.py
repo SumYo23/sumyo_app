@@ -9,8 +9,6 @@ from rest_framework import generics
 from rest_framework.views import APIView
 
 '''local'''
-from cook.models import CookIngredient, Cook
-from refrigerator.models import Refrigerator
 from user.models import User
 from .models import Like
 from .serializers import LikeSerializer
@@ -50,16 +48,23 @@ class LikeListView(generics.ListAPIView):
 
 
 class LikeList(APIView):
+    """사용자별 음식 찜 목록 보여주기"""
+
     def get(self, request):
 
-        # user_number = abcd1234
-        user, _ = User.objects.get_or_create(user_number=request.META["HTTP_AUTHORIZATION"])
+        # 사용자 정보
+        user, _ = User.objects.get_or_create(user_number=request.META["HTTP_AUTHORIZATION"])  # user_number = abcd1234
+
+        # 사용자 좋아요 정보
         if Like.objects.filter(user=user.id).exists():
             likes = Like.objects.filter(user=user.id)
 
             result = list()
             for like in likes:
+                # 찜한 요리 1개
                 cook = like.cook
+
+                # 요리 레시피 리스트
                 recipes = [
                     {
                         "number": recipe.number,
@@ -68,10 +73,12 @@ class LikeList(APIView):
                     } for recipe in cook.cook_recipe.all()
                 ]
 
+                # 요리 재료 리스트
                 ingredients = [
                     {"name": ingredient.name} for ingredient in cook.cook_ingredient.all()
                 ]
 
+                # 찜 목록
                 result.append(
                     {
                         "id": cook.pk,

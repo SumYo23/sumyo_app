@@ -152,7 +152,7 @@ class LikeList(APIView):
                         "name": cook.name,
                         "percent": percent,
                         "status": status,
-                        "ingredient": cook.ingredient,
+                        "ingredient": cook.ingredient.replace('주재료', '').split(','),
                         "recipes": recipes,
                         "ingredients": ingredients
 

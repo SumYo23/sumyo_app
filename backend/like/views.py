@@ -94,6 +94,7 @@ class LikeList(APIView):
                         "id": cook.pk,
                         "image_route": cook.image_route,
                         "name": cook.name,
+                        "percent": 0,
                         "is_like": True,
                         "ingredient": cook.ingredient.replace('주재료', '').split(','),
                         "recipes": recipes,

@@ -61,6 +61,8 @@ class CookList(APIView):
                         "image_route": recipe.recipe.image_route
                     }
                 )
+
+
             # 요리 재료 ingredients 변수에 저장
             ingredients = list()
             for ingredient in CookIngredient.objects.filter(cook__pk=pk):
@@ -76,7 +78,7 @@ class CookList(APIView):
                     "name": cook.name,
                     "percent": percent,
                     "status": status,
-                    "ingredient": cook.ingredient,
+                    "ingredient": cook.ingredient.replace('주재료', '').split(','),
                     "recipes": recipes,
                     "ingredients": ingredients
 

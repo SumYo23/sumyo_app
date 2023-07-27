@@ -4,6 +4,7 @@ from rest_framework import generics
 
 from .models import Like
 from .serializers import LikeSerializer
+from .serializers import LikeListSerializer
 
 
 class LikeCreateView(generics.CreateAPIView):
@@ -31,3 +32,8 @@ class LikeDestroyView(generics.DestroyAPIView):
         like = Like.objects.get(id=like_id)
         like.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class LikeListView(generics.ListAPIView):
+    serializer_class = LikeListSerializer
+    queryset = Like.objects.all()

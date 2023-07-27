@@ -108,7 +108,9 @@ class LikeList(APIView):
             response = Response()
             response.data = result
             return response
-        return Response('찜목록이 없습니다.')
+        else:
+            result = []
+            return Response(result)
 
 
 class LikeDetail(APIView):

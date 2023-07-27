@@ -96,12 +96,11 @@ class IngredientList(APIView):
 
 class LikeList(APIView):
     def get(self, request, num):
+        # user_number = abcd1234
         user, _ = User.objects.get_or_create(user_number=request.META["HTTP_AUTHORIZATION"])
-        if Like.objects.filter(user=user.user_number).exists():
-            print(user)
+        if Like.objects.filter(user=user.id).exists():
             # 냉장고 재고
             user_ingredient = Refrigerator.objects.filter(user=user).values_list("ingredient", flat=True)
-            print(user_ingredient)
             # 냉장고 재고와 겹치는 요리들 일치율 순서로 정렬
             user_cook = CookIngredient.objects.filter(ingredient__in=user_ingredient).values_list("cook", flat=True)
             user_cook_cnt = Counter(list(user_cook))

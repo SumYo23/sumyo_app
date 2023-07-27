@@ -10,7 +10,7 @@ from rest_framework.views import APIView
 '''local'''
 from user.models import User
 from refrigerator.models import Refrigerator
-from cook.models import Cook, CookIngredient, CookRecipe
+from cook.models import Cook, CookIngredient, CookRecipe, Ingredient
 
 
 # [GET] 0.0.0.0/api/cook/list/
@@ -85,3 +85,10 @@ class CookList(APIView):
         response = Response()
         response.data = result
         return response
+
+
+class IngredientList(APIView):
+    """db 전체 재료(ingredient) 리스트 반환"""
+    def get(self, request):
+        ingredient_list = list(Ingredient.objects.all().values_list("name", flat=True))
+        return Response(ingredient_list)

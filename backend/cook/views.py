@@ -15,9 +15,11 @@ from like.models import Like
 
 # [GET] 0.0.0.0/api/cook/list/
 class CookList(APIView):
-    """사용자별 음식 추천 목록 보여주기"""
 
     def get(self, request, num):
+        """사용자별 음식 추천 목록 보여주기"""
+
+        # 변수
         response = Response()
         result = list()
 

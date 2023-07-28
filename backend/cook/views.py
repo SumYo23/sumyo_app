@@ -5,6 +5,7 @@ import random
 '''Third-Party'''
 from rest_framework.response import Response
 from rest_framework.views import APIView
+
 '''local'''
 from user.models import User
 from refrigerator.models import Refrigerator
@@ -49,23 +50,18 @@ class CookList(APIView):
                 status = "랜덤"
 
             # 요리 순서별로 recipes 변수에 저장
-            recipes = list()
-            for recipe in CookRecipe.objects.filter(cook__pk=pk):
-                recipes.append(
-                    {
-                        "number": recipe.recipe.number,
-                        "detail": recipe.recipe.detail,
-                        "image_route": recipe.recipe.image_route
-                    }
-                )
-
+            recipes = [
+                {
+                    "number": recipe.recipe.number,
+                    "detail": recipe.recipe.detail,
+                    "image_route": recipe.recipe.image_route
+                } for recipe in CookRecipe.objects.filter(cook__pk=pk)
+            ]
 
             # 요리 재료 ingredients 변수에 저장
-            ingredients = list()
-            for ingredient in CookIngredient.objects.filter(cook__pk=pk):
-                ingredients.append(
-                    {"name": ingredient.ingredient.name}
-                )
+            ingredients = [
+                {"name": ingredient.ingredient.name} for ingredient in CookIngredient.objects.filter(cook__pk=pk)
+            ]
 
             # 결과
             result.append(
@@ -89,6 +85,7 @@ class CookList(APIView):
 
 class IngredientList(APIView):
     """db 전체 재료(ingredient) 리스트 반환"""
+
     def get(self, request):
         ingredient_list = list(Ingredient.objects.all().values_list("name", flat=True))
         return Response(ingredient_list)

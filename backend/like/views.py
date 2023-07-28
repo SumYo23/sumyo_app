@@ -13,9 +13,13 @@ from .serializers import LikeListSerializer
 
 
 class LikeList(APIView):
-    """사용자별 음식 찜 목록 보여주기"""
 
     def get(self, request):
+        """사용자별 음식 찜 목록 보여주기"""
+
+        # 변수
+        result = list()
+        response = Response()
 
         # 사용자 정보
         user, _ = User.objects.get_or_create(user_number=request.META["HTTP_AUTHORIZATION"])  # user_number = abcd1234
@@ -24,7 +28,6 @@ class LikeList(APIView):
         if Like.objects.filter(user=user.id).exists():
             likes = Like.objects.filter(user=user.id)
 
-            result = list()
             for like in likes:
                 # 찜한 요리 1개
                 cook = like.cook
@@ -58,22 +61,25 @@ class LikeList(APIView):
                     }
                 )
 
-            response = Response()
             response.data = result
             return response
         else:
-            result = []
+            response.data = []
             return Response(result)
 
 
 class LikeDetail(APIView):
+    """찜 상태 변경"""
+
     def post(self, request):
+        """찜 하기"""
         user, _ = User.objects.get_or_create(user_number=request.META["HTTP_AUTHORIZATION"])
         cook = Cook.objects.get(pk=request.data["cook_id"])
         Like.objects.get_or_create(cook=cook, user=user)
         return Response({"message": "success"})
 
     def delete(self, request):
+        """찜 안하기"""
         user, _ = User.objects.get_or_create(user_number=request.META["HTTP_AUTHORIZATION"])
         cook = Cook.objects.get(pk=request.data["cook_id"])
         Like.objects.filter(cook=cook, user=user).delete()

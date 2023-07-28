@@ -18,33 +18,39 @@ class CookList(APIView):
     """사용자별 음식 추천 목록 보여주기"""
 
     def get(self, request, num):
+        response = Response()
+        result = list()
+
         # 사용자 정보
         user, _ = User.objects.get_or_create(user_number=request.META["HTTP_AUTHORIZATION"])
 
         # 냉장고 재고
-        user_ingredient = Refrigerator.objects.filter(user=user).values_list("ingredient", flat=True)
+        ingredient = Refrigerator.objects.filter(user=user).values_list("ingredient", flat=True)
 
-        # 냉장고 재고와 겹치는 요리들 일치율 순서로 정렬
-        user_cook = CookIngredient.objects.filter(ingredient__in=user_ingredient).values_list("cook", flat=True)
-        user_cook_cnt = Counter(list(user_cook))
-        for k, v in user_cook_cnt.items():
-            user_cook_cnt[k] = int(v / CookIngredient.objects.filter(cook__pk=int(k)).count() * 100)
-        user_cook_cnt = user_cook_cnt
-        user_cook_cnt = sorted(user_cook_cnt.items(), key=lambda x: x[1], reverse=True)  # 겹치는 개수 순서로 정렬
+        # 냉장고 재고와 겹치는 요리
+        cook = Counter(list(CookIngredient.objects.filter(ingredient__in=ingredient).values_list("cook", flat=True)))
 
-        # 사용자와 안겹치는 요리 목록
-        cook_list = list(set(Cook.objects.all().values_list("pk", flat=True)) - set(user_cook))
+        # 요리 보유율
+        cook_percent = {
+            key: int(value / CookIngredient.objects.filter(cook__pk=int(key)).count() * 100)
+            for key, value in cook.items()
+        }
+
+        # 요리 보유율 기준 정렬
+        cook_percent_sort = sorted(cook_percent.items(), key=lambda x: x[1], reverse=True)
+
+        # 사용자와 안겹치는 요리 목록 (겹치는 요리 목록이 요청한 요리 개수보다 적을 경우 사용)
+        cook_no_user = list(set(Cook.objects.all().values_list("pk", flat=True)) - set(cook))
 
         # 요청받은 요리 수만큼 보여줌
-        result = list()
         for i in range(num):
-            if len(user_cook_cnt) >= i + 1:
-                pk = user_cook_cnt[i][0]
+            if len(cook_percent_sort) >= i + 1:
+                pk = cook_percent_sort[i][0]
                 cook = Cook.objects.get(pk=pk)
-                percent = user_cook_cnt[i][1]
+                percent = cook_percent_sort[i][1]
                 status = "추천"
             else:
-                pk = cook_list.pop(random.randrange(len(cook_list)))
+                pk = cook_no_user.pop(random.randrange(len(cook_no_user)))
                 cook = Cook.objects.get(pk=pk)
                 percent = 0
                 status = "랜덤"
@@ -78,7 +84,6 @@ class CookList(APIView):
                 }
             )
 
-        response = Response()
         response.data = result
         return response
 

@@ -10,9 +10,8 @@
     <img src="https://img.shields.io/badge/yolov5-pink?logo=yolov5"/>
 </p>
 
-<p style="text-align: center">
-<button style="display: inline-block;outline: 0;cursor: pointer;border-radius: 8px;box-shadow: 0 2px 5px 0 rgb(213 217 217 / 50%);background: #9EDAFB;border: 1px solid #9EDAFB;font-size: 13px;height: 31px;padding: 0 11px;text-align: center;width: 100%;min-width: 200px;font-weight: 500;color: #0F1111;" type="button" class="btn btn-info">App 다운받기</button>
-</p>
+
+[👉👉앱 다운받기👈👈](https://docs.google.com/uc?export=download&id=11DdpPetu5vjeYQd7xtiP5ojgXTKt2fzU)
 
 ## Summary
 ![image](https://github.com/SumYo23/sumyo_app/assets/82714785/b7565cd7-df7a-432a-8ae5-76b6dcc26522)

@@ -14,7 +14,6 @@ cffi==1.15.1
 chardet==4.0.0
 charset-normalizer==2.1.0
 colorama==0.4.5
-contourpy==1.1.0
 cryptography==38.0.1
 cycler==0.10.0
 debugpy==1.6.3

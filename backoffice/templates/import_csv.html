@@ -11,12 +11,14 @@
 
 <div>
     <h3>😀데이터를 정해진 양식에 맞춰 넣어주세요😀</h3>
+    <h4>csv 필드 이름은 다음의 순서와 <b style="color: blue">동일</b>해야 합니다. 'name', 'method', 'image_route', 'ingredient',
+        'recipe_1', 'recipe_image_1', "...", 'recipe_image_6'</h4>
 
-  <form method="post" enctype="multipart/form-data">
-      {% csrf_token %}
-      <input type="file" name="myfile" class="form-control">
-      <button type="submit" class="btn btn-success" >Upload</button>
-  </form>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="file" name="myfile" class="form-control">
+        <button type="submit" class="btn btn-success">Upload</button>
+    </form>
 </div>
 
 </body>

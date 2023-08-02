@@ -13,6 +13,13 @@
 
 [👉👉앱 다운받기👈👈](https://docs.google.com/uc?export=download&id=11DdpPetu5vjeYQd7xtiP5ojgXTKt2fzU)
 
+## 팀원소개
+|                   기획                    |                백엔드 개발                 |                AI 개발                |                    프론트엔드 개발                     |                                백엔드 개발                                 |
+|:---------------------------------------:|:-------------------------------------:|:-----------------------------------:|:-----------------------------------------------:|:---------------------------------------------------------------------:|
+|                   이현지                   |                  김가영                  |                 임기륜                 |                       전예준                       |                                  이경준                                  |
+| [hyunnzzz](https://github.com/hyunnzzz) | [gabang2](https://github.com/gabang2) | [giirrr](https://github.com/giirrr) | [sunlight9344](https://github.com/sunlight9344) | [kyungjunleeme](https://github.com/orgs/SumYo23/people/kyungjunleeme) |
+
+
 ## Summary
 ![image](https://github.com/SumYo23/sumyo_app/assets/82714785/b7565cd7-df7a-432a-8ae5-76b6dcc26522)
 - 레시피 탐색이 번거롭고 맞춤화 되어있지 않음 👉 **냉장고 재고 기반 다양한 레시피 추천**
@@ -32,10 +39,5 @@
 ![image](https://github.com/SumYo23/sumyo_app/assets/82714785/e7bbfd6e-8387-44a5-88a1-0831e6d96966)
 ![image](https://github.com/SumYo23/sumyo_app/assets/82714785/cb767160-7cb8-4074-b932-c34a47b4c7b6)
 
-## 팀원소개
-|                   기획                    |                백엔드 개발                 |                AI 개발                |                    프론트엔드 개발                     |                                백엔드 개발                                 |
-|:---------------------------------------:|:-------------------------------------:|:-----------------------------------:|:-----------------------------------------------:|:---------------------------------------------------------------------:|
-|                   이현지                   |                  김가영                  |                 임기륜                 |                       전예준                       |                                  이경준                                  |
-| [hyunnzzz](https://github.com/hyunnzzz) | [gabang2](https://github.com/gabang2) | [giirrr](https://github.com/giirrr) | [sunlight9344](https://github.com/sunlight9344) | [kyungjunleeme](https://github.com/orgs/SumYo23/people/kyungjunleeme) |
 
                 

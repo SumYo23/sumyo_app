@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     "refrigerator",
     "user",
     "backoffice",
+    "ai"
 ]
 
 MIDDLEWARE = [
@@ -108,8 +109,8 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # Media 폴더
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+MEDIA_URL = '/images/'
+MEDIA_ROOT = os.path.join(BASE_DIR, "images")
 
 # REST FRAMEWORK 관련 설정
 REST_FRAMEWORK = {

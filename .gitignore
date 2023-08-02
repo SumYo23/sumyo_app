@@ -1,16 +1,15 @@
 .env
-backend/.env
 /venv
-backend/.idea
 .idea
+/.idea
 *pyc
 .idea/
 
-backend/backend/__pycache__/
-backend/backoffice/__pycache__/
-backend/cook/__pycache__/
-backend/like/__pycache__/
-backend/refrigerator/__pycache__/
-backend/user/__pycache__/
-backend/**/__pycache__/
-backend/*/__pycache__/
+backend/__pycache__/
+backoffice/__pycache__/
+cook/__pycache__/
+like/__pycache__/
+refrigerator/__pycache__/
+user/__pycache__/
+**/__pycache__/
+*/__pycache__/

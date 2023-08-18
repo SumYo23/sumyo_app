@@ -79,7 +79,7 @@ class CookList(APIView):
                     "name": cook.name,
                     "percent": percent,
                     "status": status,
-                    "ingredient": cook.ingredient.replace('주재료', '').split(','),
+                    "ingredient": cook.ingredient,
                     "recipes": recipes,
                     "ingredients": ingredients
 

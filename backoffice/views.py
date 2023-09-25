@@ -55,5 +55,6 @@ def import_csv(request):
                     recipe.save()
             obj.save()
     else:
+        var = 3 / 0
         return render(request, "import_csv.html")
     return HttpResponse("성공")

@@ -4,6 +4,7 @@
 /.idea
 *pyc
 .idea/
+logs
 
 backend/__pycache__/
 backoffice/__pycache__/

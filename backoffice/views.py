@@ -2,6 +2,8 @@
 import os
 import pandas as pd
 
+from backend.settings import BASE_DIR
+
 """django"""
 from django.core.files.storage import FileSystemStorage
 from django.http import HttpResponse
@@ -21,12 +23,14 @@ def import_csv(request):
     if request.method == "POST" and request.FILES['myfile']:
         # csv 파일 pandas DataFrame에 저장
         myfile = request.FILES['myfile']
-        fs = FileSystemStorage().save(myfile.name, myfile)
+        fs = FileSystemStorage()
         filename = fs.save(myfile.name, myfile)
         uploaded_file_url = fs.url(filename)
         csv_file = uploaded_file_url
-        raw_data = pd.read_csv("." + csv_file, encoding='cp949')
-        os.remove("." + csv_file)
+
+        os.path.join(BASE_DIR, '.env')
+        raw_data = pd.read_csv(os.path.join(BASE_DIR, 'images', filename), encoding='cp949')
+        os.remove(os.path.join(BASE_DIR, 'images', filename))
 
         # 지정된 형식 저장
         raw_data = raw_data.filter(
@@ -55,6 +59,5 @@ def import_csv(request):
                     recipe.save()
             obj.save()
     else:
-        var = 3 / 0
         return render(request, "import_csv.html")
     return HttpResponse("성공")

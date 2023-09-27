@@ -32,7 +32,6 @@ INSTALLED_APPS = [
 
     # 설치한 라이브러리
     'rest_framework',
-    'django_filters',
 
     # 생성한 앱
     "cook",

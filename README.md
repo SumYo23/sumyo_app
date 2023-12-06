@@ -29,6 +29,9 @@
 - ver 1.0 : google Teachable Machine을 이용해 23개 재료에 대한 이미지 인식 가능
 - ver 2.0 : yolov5 를 이용해 재료 다양화 & 정확도 향상(2023.07.28 기준 진행중)
 
+## Architecture
+![image](https://github.com/SumYo23/sumyo_backend/assets/82714785/256452c5-d080-4316-abfe-d75796ec9426)
+
 ## 백엔드
 ![image](https://github.com/SumYo23/sumyo_app/assets/82714785/6fbee71f-0780-4bbb-ac7c-9358c79bd499)
 - Django Rest Framework를 이용하여 api를 개발 후, api명세서를 작성하여였습니다. - [api명세서 확인하기](https://trapezoidal-calf-f67.notion.site/28074bb04d9c471b9db6cee1d28f9e11?v=eb028251ead14e39ade8e6c132017b12&pvs=4)
